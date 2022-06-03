@@ -339,6 +339,24 @@ Then LSP-Bridge will start by gdb, please send new issue with `*lsp-bridge*' buf
        (with-current-buffer buffer
          ,@body))))
 
+(defvar-local lsp-bridge-current-buffer-file-is-closed? nil
+  "Mark whether the current file has been closed?")
+
+(defun lsp-bridge-reset-current-buffer-file-status (filepath)
+  (lsp-bridge--with-file-buffer filepath
+    (setq-local lsp-bridge-current-buffer-file-is-closed? nil)))
+
+(defmacro lsp-bridge--ensure-file-exists (method args &rest body)
+  "Ensure that the current file exists before sending the request.
+Except the close_file METHOD."
+  `(cond ((or (string-equal method "close_file") (not args) (file-exists-p (car args)))
+          ,@body)
+         ((not (file-exists-p (car args)))
+          (when (not lsp-bridge-current-buffer-file-is-closed?)
+            (lsp-bridge-close-buffer-file)
+            (setq-local lsp-bridge-current-buffer-file-is-closed? t)))
+         (t (message "ensure-file-exists error."))))
+
 (defun lsp-bridge-get-match-buffer (filepath)
   (catch 'find-match
     (dolist (buffer (buffer-list))
@@ -400,8 +418,9 @@ Auto completion is only performed if the tick did not change."
 
 (defun lsp-bridge-call-async (method &rest args)
   "Call Python EPC function METHOD and ARGS asynchronously."
-  (lsp-bridge-deferred-chain
-    (lsp-bridge-epc-call-deferred lsp-bridge-epc-process (read method) args)))
+  (lsp-bridge--ensure-file-exists method args
+                                  (lsp-bridge-deferred-chain
+                                    (lsp-bridge-epc-call-deferred lsp-bridge-epc-process (read method) args))))
 
 (defun lsp-bridge-call-sync (method &rest args)
   "Call Python EPC function METHOD and ARGS synchronously."
