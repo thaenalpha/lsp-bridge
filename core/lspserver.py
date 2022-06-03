@@ -294,6 +294,7 @@ class LspServer:
                     "text": f.read()
                 }
             })
+            eval_in_emacs("lsp-bridge-reset-current-buffer-file-status", filepath)
 
     def send_did_close_notification(self, filepath):
         self.sender.send_notification("textDocument/didClose", {
