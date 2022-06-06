@@ -257,6 +257,7 @@ Then LSP-Bridge will start by gdb, please send new issue with `*lsp-bridge*' buf
     (("vue") . "volar")
     (("wxml") . "wxml-language-server")
     (("html") . "vscode-html-language-server")
+    (("phtml") . "intelephense")
     )
   "The lang server rule for file extension."
   :type 'cons)
@@ -284,6 +285,7 @@ Then LSP-Bridge will start by gdb, please send new issue with `*lsp-bridge*' buf
     ((sh-mode) . "bash-language-server")
     ((css-mode) . "vscode-css-language-server")
     (elm-mode . "elm-language-server")
+    (php-mode . "intelephense")
     )
   "The lang server rule for file mode."
   :type 'cons)
@@ -324,7 +326,8 @@ Then LSP-Bridge will start by gdb, please send new issue with `*lsp-bridge*' buf
     css-mode-hook
     elm-mode-hook
     ielm-mode-hook
-    emacs-lisp-mode-hook)
+    emacs-lisp-mode-hook
+    php-mode-hook)
   "The default mode hook to enable lsp-bridge."
   :type 'list)
 

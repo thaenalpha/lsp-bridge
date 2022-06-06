@@ -1,0 +1,60 @@
+{
+    "name": "intelephense",
+    "languageId": "php",
+    "command": ["intelephense", "--stdio"],
+    "settings": {
+        "environment": {
+            "phpVersion": "7.1.33",
+            "documentRoot": "index.php",
+            "shortOpenTag": false
+        },
+        "files": {
+            "maxSize": 1000000,
+            "associations": {
+                "*.module": "php",
+                "*.php": "php",
+                "*.phtml": "php",
+                ".env*": ".env",
+                "Dockerfile_*": "Dockerfile",
+                "Dockerfile-*": "Dockerfile"
+            },
+            "exclude": [
+                "**/.git/**",
+                "**/.svn/**",
+                "**/.hg/**",
+                "**/CVS/**",
+                "**/.DS_Store/**",
+                "**/node_modules/**",
+                "**/bower_components/**",
+                "**/vendor/**/{Test,test,Tests,tests}/**"
+            ]
+        },
+        "diagnostics.enable": true,
+        "stubs": ["apache", "bcmath", "bz2", "calendar",
+                  "com_dotnet", "Core", "ctype", "curl", "date", "dba", "dom", "enchant",
+                  "exif", "fileinfo", "filter", "fpm", "ftp", "gd", "hash", "iconv", "imap", "interbase",
+                  "intl", "json", "ldap", "libxml", "mbstring", "mcrypt", "meta", "mssql", "mysqli",
+                  "oci8", "odbc", "openssl", "pcntl", "pcre", "PDO", "pdo_ibm", "pdo_mysql",
+                  "pdo_pgsql", "pdo_sqlite", "pgsql", "Phar", "posix", "pspell", "readline", "recode",
+                  "Reflection", "regex", "session", "shmop", "SimpleXML", "snmp", "soap", "sockets",
+                  "sodium", "SPL", "sqlite3", "standard", "superglobals", "sybase", "sysvmsg",
+                  "sysvsem", "sysvshm", "tidy", "tokenizer", "wddx", "xml", "xmlreader", "xmlrpc",
+                  "xmlwriter", "Zend, OPcache", "zip", "zlib"],
+        "completion": {
+            "insertUseDeclaration": true,
+            "fullyQualifyGlobalConstantsAndFunctions": false,
+            "triggerParameterHints": true,
+            "maxItems": 100
+        },
+        "format": {
+            "braces": "psr12",
+            "enable": true
+        },
+        "telemetry.enabled": false,
+        "rename.exclude": ["**/vendor/**"],
+        "trace.server": "off"
+    },
+    "initializationOptions": {
+        "clearCache": false
+    }
+}
